@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 
-# Try to load the CSV file, specifying that the headers are on line 51 (0-indexed, so use header=50)
+# Try to load the CSV file
 try:
     data = pd.read_csv('for_cal.csv', on_bad_lines='skip')
 except Exception as e:
@@ -33,7 +33,7 @@ if 'data' in locals():  # Check if data variable is defined
         
         # Check for NaN values before calculations
         if any(pd.isna([a, P, e, i, M_star])):
-            return None
+            return None, None  # Return None for both position and orientation
 
         # Mean motion
         n = np.sqrt(G * M_star / a**3)
@@ -48,6 +48,9 @@ if 'data' in locals():  # Check if data variable is defined
         E = M  # Initial guess
         for _ in range(10):  # Iterate to solve for E
             E = M + e * np.sin(E)
+
+        # Calculate true anomaly
+        nu = 2 * np.arctan2(np.sqrt(1 + e) * np.sin(E / 2), np.sqrt(1 - e) * np.cos(E / 2))
 
         # Calculate position in 2D
         x = a * (np.cos(E) - e)
@@ -65,7 +68,10 @@ if 'data' in locals():  # Check if data variable is defined
         # Final position with respect to the host star
         position = (x_orb, y_orb, z_orb)
 
-        return position
+        # Orientation (true anomaly and inclination)
+        orientation = (nu, i)  # You can choose to return other orientation parameters
+
+        return position, orientation  # Return both position and orientation
 
     # Get the current time
     current_time = datetime.now()
@@ -73,9 +79,9 @@ if 'data' in locals():  # Check if data variable is defined
     # Prepare a list to hold the results
     results = []
 
-    # Calculate position for planets, skipping if any necessary data is NaN
+    # Calculate position and orientation for planets
     for index, planet in data.iterrows():
-        position = calculate_planet_position_and_orientation(planet, current_time)
+        position, orientation = calculate_planet_position_and_orientation(planet, current_time)
         
         if position:
             results.append({
@@ -85,6 +91,8 @@ if 'data' in locals():  # Check if data variable is defined
                 'x': position[0],
                 'y': position[1],
                 'z': position[2],
+                'true_anomaly': orientation[0],  # True anomaly
+                'inclination': orientation[1],    # Inclination
                 'last_updated': planet['last_updated']
             })
 
