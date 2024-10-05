@@ -57,7 +57,7 @@ with open(output_file, mode='w', newline='') as file:
         futures = []
 
         # Loop over HIP IDs in range
-        for hip_id in range(1, 500):  # Adjust to the desired range
+        for hip_id in range(1, 1000):  # Adjust to the desired range
             futures.append(executor.submit(query_hip, hip_id))  # Submit each HIP ID for querying
 
         for future in as_completed(futures):
