@@ -15,4 +15,4 @@ filtered_df.to_csv('hip_data_l6.csv', index=True)
 #print(filtered_df)
 
 # If you want to avoid keeping the large DataFrame, you can also delete it
-del df
+#del df
