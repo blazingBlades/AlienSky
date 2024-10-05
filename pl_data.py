@@ -42,4 +42,4 @@ if original_df is not None:
 output_file_path = '/Users/linlekzaw/Desktop/AlienSky/processed_pl_data.csv'  # Change the path as needed
 
 # Save new_df to CSV
-original_df.to_csv(output_file_path, index=False)
+latest_rows.to_csv(output_file_path, index=False)
