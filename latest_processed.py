@@ -4,7 +4,7 @@ import pandas as pd
 def create_new_dataframe(file_path):
     try:
         # Read the CSV file into a DataFrame, skipping the first 38 rows
-        df = pd.read_csv(file_path, skiprows=range(0, 48), on_bad_lines='skip')  # Skip lines 1 to 38
+        df = pd.read_csv(file_path, skiprows=range(0, 50), on_bad_lines='skip')  # Skip lines 1 to 38
         
         return df  # Return the DataFrame
     
@@ -16,7 +16,7 @@ def create_new_dataframe(file_path):
         print(f"An unexpected error occurred: {e}")
 
 # Set the file path to your CSV
-file_path = '/Users/linlekzaw/Desktop/AlienSky/PS_2024.10.05_07.07.49.csv'  # Replace with your CSV file path
+file_path = '/Users/linlekzaw/Desktop/AlienSky/pl_raw.csv'  # Replace with your CSV file path
 
 # Create new DataFrame
 original_df = create_new_dataframe(file_path)
@@ -49,8 +49,9 @@ new_df_cleaned = latest_rows.dropna(subset=['hip_name'])
 print("\nCleaned DataFrame (without NaN in 'hip_name'):")
 print(new_df_cleaned)
 
-# Remove 'HIP ' and keep only the numerical part from 'hip_name'
-new_df_cleaned['hip_name'] = new_df_cleaned['hip_name'].str.replace(r'HIP\s*', '', regex=True)
+# Remove all non-numeric characters from 'hip_name'
+new_df_cleaned['hip_name'] = new_df_cleaned['hip_name'].str.replace(r'[^0-9]', '', regex=True)
+
 output_file_path = '/Users/linlekzaw/Desktop/AlienSky/for_cal.csv'
 # Display the modified DataFrame
 print("\nModified DataFrame (only numerical values in 'hip_name'):")
