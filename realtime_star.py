@@ -25,7 +25,7 @@ for index, row in filtered_stars_df.iterrows():
     
     # Append the results to the list
     results.append({
-        'Star Index': index,
+        'Star HIP': row['hip'],
         'RA (degrees)': ra,
         'Dec (degrees)': dec,
         'Distance (AU)': distance
@@ -35,7 +35,7 @@ for index, row in filtered_stars_df.iterrows():
 results_df = pd.DataFrame(results)
 
 # Save the DataFrame to a new CSV file
-results_df.to_csv('ra_de_data.csv', index=True)
+results_df.to_csv('ra_de_data.csv', index=False)
 
 print('Astrometric data for all stars has been saved to calculated_stars_data.csv.')
 print('Total stars processed:', len(filtered_stars_df))
