@@ -1,0 +1,76 @@
+body {
+  font-family: 'Poppins', sans-serif; /* Use a friendly and modern font */
+  background-color: #f0f8ff; /* Soft light blue background */
+  color: #333; /* Dark text color for contrast */
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px; /* Center the content */
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center; /* Center the text */
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white for the card effect */
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+h1 {
+  font-size: 2.5em; /* Increase heading size */
+  margin-bottom: 20px;
+  color: #1e90ff; /* Bright sky blue */
+}
+
+label {
+  font-size: 1.2em;
+  margin: 10px 0;
+  display: block; /* Make label block for better spacing */
+}
+
+select {
+  padding: 10px; /* Add padding for comfort */
+  font-size: 1em;
+  border-radius: 10px; /* Round the select box */
+  border: 2px solid #1e90ff; /* Border to match theme */
+  transition: border 0.3s; /* Smooth transition on hover */
+}
+
+select:focus {
+  border-color: #ff69b4; /* Change border color on focus */
+  outline: none; /* Remove default outline */
+}
+
+button {
+  padding: 10px 20px; /* Comfortable button size */
+  font-size: 1.2em;
+  background-color: #ff69b4; /* Pink background for cuteness */
+  color: white;
+  border: none;
+  border-radius: 15px; /* Round the button */
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition on hover */
+}
+
+button:hover {
+  background-color: #ff1493; /* Darker pink on hover */
+}
+
+#sky-map {
+  margin-top: 20px; /* Space above the sky map */
+  padding: 20px;
+  border: 2px dashed #1e90ff; /* Dashed border for the sky map */
+  border-radius: 15px; /* Round corners */
+  background-color: rgba(240, 248, 255, 0.8); /* Slightly transparent for effect */
+  min-height: 300px; /* Minimum height for the sky map area */
+}
+
+@media (max-width: 600px) {
+  h1 {
+      font-size: 2em; /* Responsive heading size */
+  }
+
+  button, select {
+      width: 100%; /* Full width on small screens */
+  }
+}

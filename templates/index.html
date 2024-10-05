@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Mapping from Exoplanet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Sky Mapping from an Exoplanet</h1>
+        <label for="exoplanet-select">Select an Exoplanet:</label>
+        <select id="exoplanet-select">
+            <!-- Options will be populated here -->
+        </select>
+        <button id="view-sky">View Sky</button>
+        <div id="sky-map">
+            <!-- Sky map will be rendered here -->
+            <p>Select an exoplanet to view the sky!</p>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
