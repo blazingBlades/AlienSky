@@ -20,5 +20,5 @@ print(ra)
 print(dec)
 print(distance)
 
-df = df[df['magnitude'] <= 6] # brightness filtering #6 beacuse it is naked eye limit
+df = df[df['magnitude'] <= 5] # brightness filtering #6 beacuse it is naked eye limit
 print('After filtering, there are {} stars'.format(len(df)))
