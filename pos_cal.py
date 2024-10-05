@@ -83,10 +83,11 @@ if 'data' in locals():  # Check if data variable is defined
     for index, planet in data.iterrows():
         position, orientation = calculate_planet_position_and_orientation(planet, current_time)
         
-        if position:
+        if position and pd.notna(planet['pl_rade']):  # Check if position is valid and radius is not null
             results.append({
                 'pl_name': planet['pl_name'],
                 'hostname': planet['hostname'],
+                'radius': planet['pl_rade'],
                 'hip': planet['hip_name'],
                 'x': position[0],
                 'y': position[1],
@@ -98,6 +99,9 @@ if 'data' in locals():  # Check if data variable is defined
 
     # Convert the results list to a DataFrame
     results_df = pd.DataFrame(results)
+
+    # Filter out rows where radius is null (if any were added after the initial check)
+    results_df = results_df[results_df['radius'].notna()]
 
     # Output to a CSV file
     output_file = 'planet_positions.csv'
