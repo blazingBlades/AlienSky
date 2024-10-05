@@ -81,6 +81,7 @@ if 'data' in locals():  # Check if data variable is defined
             results.append({
                 'pl_name': planet['pl_name'],
                 'hostname': planet['hostname'],
+                'hip': planet['hip_name'],
                 'x': position[0],
                 'y': position[1],
                 'z': position[2],
