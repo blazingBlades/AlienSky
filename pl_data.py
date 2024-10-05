@@ -42,4 +42,11 @@ if original_df is not None:
 output_file_path = '/Users/linlekzaw/Desktop/AlienSky/processed_pl_data.csv'  # Change the path as needed
 
 # Save new_df to CSV
-latest_rows.to_csv(output_file_path, index=False)
+
+# Drop rows where 'hip_name' is NaN
+new_df_cleaned = latest_rows.dropna(subset=['hip_name'])
+
+# Display the cleaned DataFrame
+print("\nCleaned DataFrame (without NaN in 'hip_name'):")
+print(new_df_cleaned)
+new_df_cleaned.to_csv(output_file_path, index=False)
