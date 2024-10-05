@@ -12,6 +12,11 @@ ra_de_data_df['Dec (degrees)'] = pd.to_numeric(ra_de_data_df['Dec (degrees)'], e
 ra_de_data_df['Magnitude'] = pd.to_numeric(ra_de_data_df['Magnitude'], errors='coerce')  # Ensure magnitude is numeric
 ra_de_data_df['Color'] = pd.to_numeric(ra_de_data_df['Color'], errors='coerce')  # Convert B-V to numeric
 
+normalized_df = ra_de_data_df.copy()
+min_value = ra_de_data_df['Color'].min()
+max_value = ra_de_data_df['Color'].max()
+normalized_df['Color'] = (ra_de_data_df['Color'] - min_value) / (max_value - min_value)
+
 # Function to convert B-V color index to RGB
 def bv_to_rgb(bv):
     # Define RGB values for some B-V ranges
@@ -29,6 +34,13 @@ def bv_to_rgb(bv):
         return (1.0, 0.5, 0.0)  # Orange
     else:                        # Red
         return (1.0, 0.0, 0.0)  # Red
+    
+def norm_to_grayscale(normalized_value):
+    # Clamp normalized_value to be between 0 and 1
+    normalized_value = max(0, min(normalized_value, 1))
+    # 0 -> (1, 1, 1) and 1 -> (0.5, 0.5, 0.5)
+    return (1 - normalized_value * 0.7, 1 - normalized_value * 0.7, 1 - normalized_value * 0.7)
+
 
 # Get GPS coordinates and elevation
 gps_latitude = 40.7128  # Latitude (degrees)
@@ -58,7 +70,7 @@ for index, row in ra_de_data_df.iterrows():
         size = max(size, 0.1)  # Invert magnitude for size (size is from 0.1 to 20)
         
         # Convert B-V to RGB
-        color = bv_to_rgb(color_value)
+        color = norm_to_grayscale(color_value)
         
         star_map_data.append((ra, dec, size, color))
 
@@ -74,11 +86,11 @@ for star in star_map_data:
     theta = radians(ra)  # Azimuth (RA in radians)
     r = 90 - dec         # Radius (inverted Dec for correct projection)
 
-    glow_size = size * 0.3  # Make the glow larger than the star
-    ax.scatter(theta, r, color=(*color, 0.3), s=glow_size, alpha=0.5)
+    #glow_size = size * 2.5  # Make the glow larger than the star
+    #ax.scatter(theta, r, color=(*color, 0.2), s=glow_size, alpha=0.5)
     
     # Plot the star on the map with variable size and color
-    ax.scatter(theta, r, color=(1.0,1.0,1.0), s=size * 0.1)  # 's' specifies the size
+    ax.scatter(theta, r, color=color, s=size * 0.1)  # 's' specifies the size
 
 # Customize the plot (night sky-like background)
 ax.set_facecolor('black')
