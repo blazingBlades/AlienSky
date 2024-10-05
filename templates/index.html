@@ -1,26 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Metadata -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sky Mapping from Exoplanet</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta description="Explore star maps from the perspective of various exoplanets.">
+    <meta name="keywords" content="Exoplanets, Star Mapping, Astronomy, Space Exploration">
+    <meta name="author" content="Your Name or Your Company">
+
+    <!-- Title -->
+    <title>Exoplanet Star Map Explorer</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" />
+
+    <!-- Google Fonts (Optional) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome (Optional) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-p4Y5kU0jL5U1t3YHkKpQGNmVtLcX5Ewz/RU+/3RxlV+V7Htu5D+ihj/SdDk/5tE6DqVZHscE69rqFZKZj+6G9w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- GSAP Library for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Sky Mapping from an Exoplanet</h1>
-        <label for="exoplanet-select">Select an Exoplanet:</label>
-        <select id="exoplanet-select">
-            <option value="">--Select Exoplanet--</option>
-            <option value="Proxima Centauri b">Proxima Centauri b</option>
-            <option value="Kepler-186f">Kepler-186f</option>
-            <option value="TRAPPIST-1d">TRAPPIST-1d</option>
-        </select>
-        <button id="view-sky">View Sky</button>
-        <div id="sky-map">
-            <!-- Sky map will be rendered here -->
+    <!-- Intro Video Section -->
+    <div id="intro-video" class="section">
+        <iframe id="video-frame" src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&controls=0&mute=1&loop=1&playlist=VIDEO_ID" 
+            title="Universe Explosion" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>
+    </div>
+
+    <!-- Planet Selection Section -->
+    <div id="planet-selection" class="section hidden">
+        <div class="moving-background"></div>
+        <h1>Select an Exoplanet</h1>
+        <div class="buttons-container">
+            <button class="planet-button" data-planet="kepler-22b">Kepler-22b</button>
+            <button class="planet-button" data-planet="proxima-centauri-b">Proxima Centauri b</button>
+            <button class="planet-button" data-planet="gliese-667-cc">Gliese 667 Cc</button>
+            <button class="planet-button" data-planet="trappist-1e">TRAPPIST-1e</button>
+            <!-- Add more planets as needed -->
         </div>
     </div>
+
+    <!-- Star Map Display Section -->
+    <div id="star-map" class="section hidden">
+        <div id="three-container"></div>
+    </div>
+
+    <!-- Script -->
     <script src="script.js"></script>
 </body>
 </html>

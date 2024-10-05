@@ -1,0 +1,97 @@
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: opacity 1s ease-in-out;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Intro Video Styles */
+#intro-video iframe {
+  width: 100%;
+  height: 100%;
+}
+
+/* Planet Selection Styles */
+#planet-selection {
+  background: radial-gradient(circle at top, #000428, #004e92);
+  position: relative;
+  overflow: hidden;
+}
+
+.moving-background {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: url('assets/background.jpg') repeat;
+  opacity: 0.1;
+  top: -50%;
+  left: -50%;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 40px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+
+.buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.planet-button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  backdrop-filter: blur(5px);
+}
+
+.planet-button:hover {
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Star Map Styles */
+#star-map {
+  background-color: #000;
+}
+
+#three-container {
+  width: 100%;
+  height: 100%;
+}
