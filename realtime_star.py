@@ -29,7 +29,7 @@ for index, row in filtered_stars_df.iterrows():
 
     # Append the results to the list
     results.append({
-        'Star HIP': row['hip'],
+        'Star HIP': int(row['hip']),
         'Magnitude': row['magnitude'],
         'RA (degrees)': ra_degrees,
         'Dec (degrees)': dec_degrees,
