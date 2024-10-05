@@ -49,4 +49,11 @@ new_df_cleaned = latest_rows.dropna(subset=['hip_name'])
 # Display the cleaned DataFrame
 print("\nCleaned DataFrame (without NaN in 'hip_name'):")
 print(new_df_cleaned)
+
+# Remove 'HIP ' and keep only the numerical part from 'hip_name'
+new_df_cleaned['hip_name'] = new_df_cleaned['hip_name'].str.replace(r'HIP\s*', '', regex=True)
+
+# Display the modified DataFrame
+print("\nModified DataFrame (only numerical values in 'hip_name'):")
+print(new_df_cleaned)
 new_df_cleaned.to_csv(output_file_path, index=False)
