@@ -4,7 +4,7 @@
     <!-- Metadata -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta description="Explore star maps from the perspective of various exoplanets.">
+    <meta name="description" content="Explore star maps from the perspective of various exoplanets.">
     <meta name="keywords" content="Exoplanets, Star Mapping, Astronomy, Space Exploration">
     <meta name="author" content="Your Name or Your Company">
 
@@ -27,22 +27,26 @@
     />
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="test.css">
 
-    <!-- Three.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Three.js Library (Updated to r152) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js" integrity="sha512-TIb3x1kSf8VrC3e2XbAF8VblHeW19SBYMMXho9o3BwN5ZQKgogf9unb+lKEh8ax6xU7M+kbVZ7BmNgCkL4ohNw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- OrbitControls for Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/examples/js/controls/OrbitControls.min.js" integrity="sha512-Vru3VHE5aYcI6/uhpKnlZYFfqNxtfhDT3VvRvr0nO/d0xDjsqEASr13kgNfQ/H00FwsTgKLiQCrPsnXFSQdQ8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- GSAP Library for Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-GTP0HBkSJ8i+l1zl1SEnC7uv/H54E4MEL54EIBogFxW9R5g+tEueWZtZ3ZmKdRzHAeAnLlrUJ6vODoBYUTcUZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <!-- Intro Video Section -->
-    <div id="intro-video" class="section">
+    <div id="intro-video" class="section visible">
         <video src="https://svs.gsfc.nasa.gov/vis/a010000/a012600/a012656/12656_Big_Bang_1080.webm" 
                autoplay 
                muted 
                loop 
-               style="width: 100%; height: 100%;">
+               playsinline
+               class="intro-video">
             Your browser does not support the video tag.
         </video>
     </div>
@@ -61,10 +65,15 @@
 
     <!-- Star Map Display Section -->
     <div id="star-map" class="section hidden">
+        <!-- Loading Spinner (Optional) -->
+        <div id="loading-spinner" class="spinner hidden">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
         <div id="three-container"></div>
     </div>
 
     <!-- Script -->
-    <script src="script.js"></script>
+    <script src="test.js"></script>
 </body>
 </html>

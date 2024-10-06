@@ -1,0 +1,164 @@
+/* style.css */
+
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden;
+  background-color: #000;
+}
+
+/* Sections */
+.section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.section.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.section.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Intro Video Styles */
+#intro-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the video covers the entire container without distortion */
+}
+
+/* Planet Selection Styles */
+#planet-selection {
+  background: radial-gradient(circle at top, #000428, #e3569d);
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#planet-selection h1 {
+  font-size: 3rem;
+  margin-bottom: 50px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+
+.buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.planet-button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  backdrop-filter: blur(5px);
+}
+
+.planet-button:hover,
+.planet-button:focus {
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.4);
+  outline: none; /* Removes default focus outline */
+}
+
+.planet-button:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Star Map Styles */
+#star-map {
+  background-color: #000;
+}
+
+#three-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* Loading Spinner Styles (Optional) */
+.spinner {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -20px 0 0 -20px;
+  z-index: 10;
+}
+
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #ffffff;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  animation: bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+  animation-delay: -1.0s;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(0.0); }
+  50% { transform: scale(1.0); }
+}
+
+/* Responsive Typography */
+h1 {
+  font-size: 3rem;
+}
+
+@media (max-width: 768px) {
+  #planet-selection h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+  }
+
+  .planet-button {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #planet-selection h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .planet-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
