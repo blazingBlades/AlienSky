@@ -7,8 +7,8 @@ import numpy as np
 ra_de_data_df = pd.read_csv('color_coded.csv')
 pla2sun_df = pd.read_csv('pla2sun.csv')  # Load planet-to-sun data
 
-
-planet_no = 21 # Change the index here if you want a different planet
+planet_no = 21
+# Change the index here if you want a different planet ##0-24 max
 # Convert RA and Dec columns to numeric types (in case they're strings)
 ra_de_data_df['RA (degrees)'] = pd.to_numeric(ra_de_data_df['RA (degrees)'], errors='coerce')
 ra_de_data_df['Dec (degrees)'] = pd.to_numeric(ra_de_data_df['Dec (degrees)'], errors='coerce')
@@ -18,6 +18,28 @@ ra_de_data_df['Color'] = pd.to_numeric(ra_de_data_df['Color'], errors='coerce') 
 # Get the planet radius from the first row (or specify the index of the planet you want)
 planet_row = pla2sun_df.iloc[planet_no]  
 planet_r = planet_row['radius']
+
+def equatorial_to_cartesian(ra_degrees, dec_degrees, distance_au):
+    # Convert distance from AU to meters
+    distance_meters = distance_au * 1.496e11  # 1 AU is approximately 1.496 x 10^11 meters
+
+    # Convert angles to radians
+    ra_radians = np.radians(ra_degrees)
+    dec_radians = np.radians(dec_degrees)
+
+    # Calculate Cartesian coordinates in meters
+    x = distance_meters * np.cos(dec_radians) * np.cos(ra_radians)
+    y = distance_meters * np.cos(dec_radians) * np.sin(ra_radians)
+    z = distance_meters * np.sin(dec_radians)
+
+    return x, y, z
+
+# Convert each star's RA, Dec, and distance to Cartesian coordinates
+ra_de_data_df[['x_f', 'y_f', 'z_f']] = ra_de_data_df.apply(
+    lambda row: equatorial_to_cartesian(row['RA (degrees)'], row['Dec (degrees)'], row['Distance (AU)']),
+    axis=1,
+    result_type='expand'
+)
 
 # Function to convert B-V color index to RGB
 def bv_to_rgb(bv):
@@ -36,26 +58,10 @@ def bv_to_rgb(bv):
     else:                        # Red
         return (1.0, 0.0, 0.0)
 
-# Extract SE3 transformation from the selected planet row
-def extract_se3(se3_string):
-    print(f"Extracting SE3 from string: {se3_string}")  # Debugging line
-    try:
-        # Convert the SE3_string directly to a numpy array
-        matrix = np.array(eval(se3_string))  # Assuming the string is a valid 4x4 matrix
-        if matrix.shape != (4, 4):
-            raise ValueError("SE3_string is not a 4x4 matrix")
-        
-        R = matrix[:3, :3]  # Extract the rotation part (3x3)
-        t = matrix[:3, 3]   # Extract the translation part (3x1)
-        return R, t
-    except Exception as e:
-        raise ValueError(f"Error extracting SE3: {e}")
-
-
 # Get GPS coordinates and elevation
-gps_latitude = 40.7128  # Latitude (degrees)
-gps_longitude = -74.0060  # Longitude (degrees)
-observer_elevation = 5  # Elevation (meters)
+gps_latitude = 35.011665  # Latitude (degrees) ##kyoto
+gps_longitude = 135.768326  # Longitude (degrees) ###kyoto
+observer_elevation = 0  # Elevation (meters)
 
 # Constants
 R = 6371000 * planet_r  # Radius of the Earth in meters * ratio
@@ -63,12 +69,11 @@ R = 6371000 * planet_r  # Radius of the Earth in meters * ratio
 # Calculate the visible declination based on observer's elevation
 visible_declination = 90 - degrees(asin(R / (R + observer_elevation)))
 
+# Calculate zenith angle for the observer
+zenith_angle = 90 - (visible_declination + gps_latitude)
+
 # Prepare list to store star map data
 star_map_data = []
-
-# Process the selected planet
-se3_string = planet_row['SE3_string']
-R_matrix, t_vector = extract_se3(se3_string)
 
 # Iterate over each star in the DataFrame
 for star_index, star_row in ra_de_data_df.iterrows():
@@ -78,7 +83,7 @@ for star_index, star_row in ra_de_data_df.iterrows():
     color_value = star_row['Color']  # B-V color index
     
     # Apply elevation control (only include stars above the observer's horizon)
-    if dec >= visible_declination:
+    if dec >= (visible_declination - zenith_angle):  # Adjust visibility based on zenith angle
         # Adjust size based on magnitude
         size = -4.975 * magnitude + 24.975
         size = max(size, 0.1)  # Invert magnitude for size
@@ -86,17 +91,22 @@ for star_index, star_row in ra_de_data_df.iterrows():
         # Convert B-V to RGB
         color = bv_to_rgb(color_value)
 
-        # Calculate star position in Cartesian coordinates (in AU)
-        star_x = np.cos(radians(dec)) * np.cos(radians(ra))  # x = cos(Dec) * cos(RA)
-        star_y = np.cos(radians(dec)) * np.sin(radians(ra))  # y = cos(Dec) * sin(RA)
-        star_z = np.sin(radians(dec))  # z = sin(Dec)
+        xx = star_row['x_f'] - planet_row['absolute_x']
+        yy = star_row['y_f'] - planet_row['absolute_y']
+        zz = star_row['z_f'] - planet_row['absolute_z']
 
-        # Transform star position to the planet's reference frame
-        star_position = np.array([star_x, star_y, star_z])
-        transformed_position = R_matrix @ star_position + t_vector  # Apply SE3 transformation
-        
+        # Calculate star position in Cartesian coordinates (in AU)
+        dec = np.degrees(np.arcsin(zz / np.sqrt(xx**2 + yy**2 + zz**2)))
+
+        # Calculate RA in degrees
+        ra = np.degrees(np.arctan2(yy, xx))
+
+        # Ensure RA is in the range [0, 360)
+        if ra < 0:
+            ra += 360
+
         # Store transformed position with star data
-        star_map_data.append((*transformed_position, size, color))
+        star_map_data.append((xx, yy, zz, size, color))
 
 # Plot the star map
 fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
@@ -123,7 +133,7 @@ for star in star_map_data:
 ax.set_facecolor('black')
 ax.grid(False)
 ax.set_yticklabels([])  # Hide radial (Dec) labels
-ax.set_xticklabels([])  # Hide angular (RA) labels
+ax.set_xticklabels([])  # Hide
 
-plt.title(f'Star Map (Observer on the Sun at {gps_latitude}°N, {gps_longitude}°E, Elevation: {observer_elevation} m)')
+plt.title(f'Star Map (Observer on {planet_row["pl_name"]} at {gps_latitude}°N, {gps_longitude}°E, Elevation: {observer_elevation} m)')
 plt.show()

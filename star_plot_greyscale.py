@@ -43,9 +43,9 @@ def norm_to_grayscale(normalized_value):
 
 
 # Get GPS coordinates and elevation
-gps_latitude = 40.7128  # Latitude (degrees)
-gps_longitude = -74.0060  # Longitude (degrees)
-observer_elevation = 5  # Elevation (meters)
+gps_latitude = 35.011665  # Latitude (degrees) ##kyoto
+gps_longitude = 135.768326  # Longitude (degrees) ###kyoto
+observer_elevation = 0  # Elevation (meters)
 
 # Constants
 R = 6371000  # Radius of the Earth in meters

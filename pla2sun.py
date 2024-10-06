@@ -38,7 +38,8 @@ hip_data.rename(columns={'hip': 'hip'}, inplace=True)
 # Merge the datasets on 'hip' to get the star positions
 merged_data = pd.merge(planet_data, hip_data, on='hip', how='inner')
 
-# Calculate the absolute position of the planet from the Sun (convert star position from parsecs to meters)
+# Calculate the absolute position of the planet from the Sun
+# ~ (convert star position from parsecs to meters)~
 def calculate_absolute_position(row):
     # Conversion factor from parsecs to meters
     #parsec_to_meters = 3.0857e16
