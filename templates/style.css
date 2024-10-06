@@ -41,24 +41,15 @@ body, html {
 
 /* Planet Selection Styles */
 #planet-selection {
-  background: radial-gradient(circle at top, #000428, #004e92);
+  background: radial-gradient(circle at top, #000428, #e3569d);
   position: relative;
   overflow: hidden;
 }
 
-.moving-background {
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  background: url('assets/background.jpg') repeat;
-  opacity: 0.1;
-  top: -50%;
-  left: -50%;
-}
-
-h1 {
-  font-size: 3rem;
-  margin-bottom: 40px;
+.h1 {
+  text-decoration: solid;
+  font-size: 12px;
+  margin-bottom: 50px;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
 }
 

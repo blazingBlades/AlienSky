@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 10000); // 10,000 milliseconds = 10 seconds
 
     // Animate Moving Background using GSAP
-    gsap.to(".moving-background", {
+    /**gsap.to(".moving-background", {
         x: 100,
         duration: 60,
         repeat: -1,
         yoyo: true,
         ease: "linear"
-    });
+    });*/
 
     // Add Event Listeners to Planet Buttons
     planetButtons.forEach(button => {
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         animate();
 
-        // Optional: Add OrbitControls for Interaction
+        // optional: Add OrbitControls for Interaction
         /*
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
