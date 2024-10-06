@@ -23,6 +23,7 @@ def equatorial_to_cartesian(ra_degrees, dec_degrees, distance_au):
 # Iterate over each planet in pla2sun_df
 for index, planet_row in pla2sun_df.iterrows():
     planet_name = planet_row['pl_name']  # Get the planet name
+    host_star_hip = planet_row['hip']  # Get the host star HIP
     planet_radius = planet_row['radius']  # Get the planet radius
     
     # Convert each star's RA, Dec, and distance to Cartesian coordinates
@@ -37,10 +38,12 @@ for index, planet_row in pla2sun_df.iterrows():
     ra_de_data_df['yy'] = ra_de_data_df['y_f'] - planet_row['absolute_y']
     ra_de_data_df['zz'] = ra_de_data_df['z_f'] - planet_row['absolute_z']
 
-    # Prepare the output DataFrame with relevant columns
-    output_df = ra_de_data_df[['RA (degrees)', 'Dec (degrees)', 'Magnitude', 'Color', 'xx', 'yy', 'zz']]
-    
+    # Prepare the output DataFrame with relevant columns, including pl_name and host star HIP
+    output_df = ra_de_data_df[['RA (degrees)', 'Dec (degrees)', 'Magnitude', 'Color', 'xx', 'yy', 'zz']].copy()
+    output_df['pl_name'] = planet_name
+    output_df['hip'] = host_star_hip
+
     # Save the output DataFrame to CSV
     output_df.to_csv(f'{planet_name}.csv', index=False)
-    
+
     print(f'Output for {planet_name} saved to {planet_name}.csv')
